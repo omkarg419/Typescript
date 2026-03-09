@@ -52,6 +52,11 @@ class InMemoryDB {
         if (!this._db.has(id)) throw new Error(`User with ID ${id} does not exists`)
         return this._db.get(id)!
     }
+
+    public deleteUser(id: UserID): boolean {
+        if (!this._db.has(id)) throw new Error(`User with ID ${id} does not exists`)
+        return this._db.delete(id)
+    }
 }
 
 
@@ -82,3 +87,4 @@ console.log(myDb.getUserById('1'))
 
 const user = myDb.getUserById('1')
 console.log(user)
+myDb.deleteUser('1')
