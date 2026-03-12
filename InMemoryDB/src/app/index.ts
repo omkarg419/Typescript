@@ -1,16 +1,15 @@
-import express from 'express';
-import type { Application } from 'express';
+import express from "express";
+import type { Application } from "express";
+import { env } from "../env.js";
+import todoRouter from './todo/routes.js'
 
-export function createServerApplication(): Application{
-const app=express()
+export function createServerApplication(): Application {
+  const app = express();
 
-app.get('/',function(req,res){
-    return res.json({message:'Hello World'})
-})
+//#region  //*=========== todo-routes ===========
+  app.use('/todos',todoRouter)
 
-app.get('/om',function(req,res){
-    return res.json({massage:'omkar gupta'})
-})
+//#endregion  //*=========== todo-routes ===========
 
-    return app
+  return app;
 }

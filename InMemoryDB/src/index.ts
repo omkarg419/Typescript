@@ -1,6 +1,7 @@
 import http from 'http';
 import {env} from './env.js'
-import{createServerApplication} from './app/index.js'
+import { createServerApplication } from './app/index.js';
+
 
 async function main(){
     try {
