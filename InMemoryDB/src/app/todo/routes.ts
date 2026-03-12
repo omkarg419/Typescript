@@ -10,8 +10,8 @@ router.get("/:id",controller.handleGetTodoByID.bind(controller));
 
 router.post("/",controller.handleInsertTodo.bind(controller));
 
-// router.put("/:id");
-// router.delete("/:id");
+router.put("/:id",controller.handleUpdateTodo.bind(controller));
+router.delete("/:id",controller.handleDeleteTodo.bind(controller));
 
 
 export default router

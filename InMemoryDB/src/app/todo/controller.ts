@@ -18,9 +18,15 @@ class TodoController {
 	}
 
 	public handleGetTodoByID(req: Request, res: Response) {
-		const todos = this._db;
+		
 		const { id } = req.params;
-		const selectedTodo = todos.find((e) => e.id === id);
+		const todoExist = this._db.some((e) => e.id === id);
+		if (!todoExist) {
+			return res.status(404).json({
+				massage: "Todo not found",
+			});
+		}
+		const selectedTodo = this._db.find((e) => e.id === id);
 
 		return res.json({ selectedTodo });
 	}
@@ -37,6 +43,12 @@ class TodoController {
 
 	public async handleUpdateTodo(req: Request, res: Response) {
 		const { id } = req.params;
+		const todoExist = this._db.some((e) => e.id === id);
+		if (!todoExist) {
+			return res.status(404).json({
+				massage: "Todo not found",
+			});
+		}
 
 		const validateBody = await todoValidationSchema.parseAsync(req.body);
 		if (!validateBody) {
@@ -55,6 +67,25 @@ class TodoController {
 		toUpdateTodo.isCompleted = isCompleted;
 
 		return res.status(201).json({ UpdatedTodo: toUpdateTodo });
+	}
+
+	public handleDeleteTodo(req: Request, res: Response) {
+		const { id } = req.params;
+
+		const todoExist = this._db.some((e) => e.id === id);
+		if (!todoExist) {
+			return res.status(404).json({
+				massage: "Todo not found",
+			});
+		}
+
+		const filtteredTodo = this._db.filter((e) => e.id !== id);
+
+		this._db = filtteredTodo;
+
+		return res
+			.status(201)
+			.json({ message: "Todo deleted successfully", filtteredTodo });
 	}
 }
 
